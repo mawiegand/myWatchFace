@@ -9,8 +9,18 @@
     "resources": {
         "media": [
             {
+                "file": "images/background_blue.png",
+                "name": "IMAGE_BACKGROUND_BLUE",
+                "type": "png"
+            },
+            {
+                "file": "images/background.png",
+                "name": "IMAGE_BACKGROUND",
+                "type": "png"
+            },
+            {
                 "file": "fonts/nasalization rg.ttf",
-                "name": "FONT_NASALIZATION_48",
+                "name": "FONT_NASALIZATION_38",
                 "type": "font"
             }
         ]
