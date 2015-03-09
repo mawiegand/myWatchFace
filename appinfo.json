@@ -7,7 +7,13 @@
     "longName": "BluePanel Watchface",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "fonts/nasalization rg.ttf",
+                "name": "FONT_NASALIZATION_48",
+                "type": "font"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "BP Watchface",
