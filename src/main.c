@@ -2,7 +2,9 @@
 
 static Window *s_main_window;
 static TextLayer *s_time_layer;
+static TextLayer *s_date_layer;
 static GFont s_time_font;
+static GFont s_date_font;
 static BitmapLayer *s_background_layer;
 static GBitmap *s_background_bitmap;
 
@@ -12,19 +14,23 @@ static void update_time() {
   struct tm *tick_time = localtime(&temp);
 
   // Create a long-lived buffer
-  static char buffer[] = "00:00";
+  static char time_buffer[] = "00:00";
+  static char date_buffer[] = "TUE 01-01-01";
 
   // Write the current hours and minutes into the buffer
   if(clock_is_24h_style() == true) {
     // Use 24 hour format
-    strftime(buffer, sizeof("00:00"), "%H:%M", tick_time);
+    strftime(time_buffer, sizeof("00:00"), "%H:%M", tick_time);
   } else {
     // Use 12 hour format
-    strftime(buffer, sizeof("00:00"), "%I:%M", tick_time);
+    strftime(time_buffer, sizeof("00:00"), "%I:%M", tick_time);
   }
-
+  
+  strftime(date_buffer, sizeof("TUE 01-01-01"), "%a %d-%m-%y", tick_time);
+  
   // Display this time on the TextLayer
-  text_layer_set_text(s_time_layer, buffer);
+  text_layer_set_text(s_time_layer, time_buffer);
+  text_layer_set_text(s_date_layer, date_buffer);
 }
 
 static void main_window_load(Window *window) {
@@ -47,17 +53,30 @@ static void main_window_load(Window *window) {
     text_layer_set_text_color(s_time_layer, GColorBlack);
   #endif
   
+  // Create date TextLayer
+  s_date_layer = text_layer_create(GRect(27, 120, 88, 16));
+  text_layer_set_background_color(s_date_layer, GColorClear);
+  #ifdef PBL_COLOR
+    text_layer_set_text_color(s_date_layer, GColorWhite);
+  #else
+    text_layer_set_text_color(s_date_layer, GColorBlack);
+  #endif
+  
   // Create GFont
   s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_NASALIZATION_38));
+  s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_NASALIZATION_14));
 
   // Apply to TextLayer
   text_layer_set_font(s_time_layer, s_time_font);
+  text_layer_set_font(s_date_layer, s_date_font);
   
   // Improve the layout to be more like a watchface
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
+  text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
 
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_date_layer));
   
   // Make sure the time is displayed from the start
   update_time();

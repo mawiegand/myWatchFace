@@ -20,6 +20,11 @@
             },
             {
                 "file": "fonts/nasalization rg.ttf",
+                "name": "FONT_NASALIZATION_14",
+                "type": "font"
+            },
+            {
+                "file": "fonts/nasalization rg.ttf",
                 "name": "FONT_NASALIZATION_38",
                 "type": "font"
             }
